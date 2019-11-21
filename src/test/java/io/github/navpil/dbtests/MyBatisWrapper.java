@@ -12,12 +12,12 @@ import java.sql.DriverManager;
 public class MyBatisWrapper {
 
 
-    private final String jdbc;
+    private final String url;
     private final String username;
     private final String password;
 
-    public MyBatisWrapper(String jdbc, String username, String password) {
-        this.jdbc = jdbc;
+    public MyBatisWrapper(String url, String username, String password) {
+        this.url = url;
         this.username = username;
         this.password = password;
     }
@@ -37,7 +37,7 @@ public class MyBatisWrapper {
             @Override
             protected ConnectionProvider getConnectionProvider() {
                 try {
-                    return () -> DriverManager.getConnection(jdbc + ";databaseName=carrental", username, password);
+                    return () -> DriverManager.getConnection(url, username, password);
                 } catch (Exception var2) {
                     throw new MigrationException("Error creating ScriptRunner.  Cause: " + var2, var2);
                 }

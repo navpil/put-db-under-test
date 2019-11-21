@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 @Ignore
-public class TryOutDbUnit {
+public class ImportExportDataWithDbUnit {
 
     // http://jvalentino.blogspot.com/2011/08/using-dbunit-through-ant-with-large-ms.html
     // https://nofluffjuststuff.com/blog/paul_duvall/2006/07/dbunit_with_junit_4

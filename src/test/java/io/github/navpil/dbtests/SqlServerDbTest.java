@@ -36,7 +36,7 @@ public class SqlServerDbTest {
         System.out.println("All went fine");
 
         //DDL
-        new MyBatisWrapper(url, username, password).up();
+        new MyBatisWrapper(url+ ";databaseName=carrental", username, password).up();
 
         connection = DriverManager.getConnection(url + ";databaseName=carrental", username, password);
 
