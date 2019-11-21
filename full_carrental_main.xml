@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <car id="6675A41A-5C45-4D60-BDE0-B79F975886FD" brand="BMW" max_speed="260"/>
+  <car id="3D09BB81-612C-4D64-95DF-D2E4853D1927" brand="Audi" max_speed="270"/>
+</dataset>
