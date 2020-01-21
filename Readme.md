@@ -40,6 +40,13 @@ Data can be queried by using of the tools for accessing the DB, described below.
 
 ## Migration tools
 
+Usually migration tools fit into one of the categories:
+
+ - Changeset based tools - flyway, mybatis, liquibase all fit into this category.
+ - Diff based tools - these are not mentioned below, but they exist. 
+ They take the current DB state, compare it with desired DB state and generate the diff-script.
+ - Code first tools - Hibernate built in migrations fall into this category. 
+
 ### Flyway
 
 Comes with JRE and lots of drivers. 
@@ -63,6 +70,8 @@ Does not have clearly defined programming interface and is primarily a CLI tool.
 But programmatic interaction is still possible.
 
 Is absolutely free, no enterprise version.
+
+Supports both .sql migrations and .java migrations, but they can't be used together out of the box.
 
 ### Liquibase
 
@@ -88,6 +97,19 @@ Not really a safe option, but can be used for testing.
 
 However if production uses other DDL scripts, database for testing might not be the same as production.
 
+### Other options
+
+Basic DB migration tool is a pretty simple thing to write, so some teams actually write the tool themselves.
+Because it's so simple to write the tool yourself, there are many of them and each language has a preferred tool.
+Sometimes there are special migration tools per database.
+In a multilanguage project other tools can be used and it's not a problem.
+
+Some non-java tools worth mentioning:
+ 
+ - [DBMate](https://github.com/amacneil/dbmate) 
+ - [Active record](https://guides.rubyonrails.org/v5.2/active_record_migrations.html)
+ - [Django migrations](https://docs.djangoproject.com/en/2.2/topics/migrations/)
+
 ## Access DB
 
 Nice link about technologies mentioned below:
@@ -112,7 +134,7 @@ All other tools build on top of JDBC.
 
 Removes JDBC boilerplate code and simplifies working with JDBC.
 It also picks up Connection Pools if those are available.
-You don't have to be inside Spring Container to user JdbcTemplate
+You don't have to be inside Spring Container to use JdbcTemplate
 
     JdbcTemplateDao
     
@@ -174,4 +196,3 @@ Provides basic CRUD queries out of the box and creates queries based on interfac
 
 I could not find a simple setup of SpringData outside the spring context, so no examples available.
 Therefore I'm not sure it is really good for testing.
-  
