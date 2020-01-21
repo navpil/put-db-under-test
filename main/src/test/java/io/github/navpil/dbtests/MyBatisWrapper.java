@@ -1,13 +1,20 @@
 package io.github.navpil.dbtests;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import org.apache.ibatis.migration.ConnectionProvider;
+import org.apache.ibatis.migration.DataSourceConnectionProvider;
+import org.apache.ibatis.migration.FileMigrationLoader;
+import org.apache.ibatis.migration.JdbcConnectionProvider;
 import org.apache.ibatis.migration.MigrationException;
 import org.apache.ibatis.migration.commands.BaseCommand;
 import org.apache.ibatis.migration.operations.UpOperation;
 import org.apache.ibatis.migration.options.OptionsParser;
 import org.apache.ibatis.migration.options.SelectedOptions;
+import org.apache.ibatis.migration.utils.Util;
 
+import java.io.File;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 public class MyBatisWrapper {
 
@@ -24,6 +31,20 @@ public class MyBatisWrapper {
 
     public void up() {
         final SelectedOptions options = OptionsParser.parse(new String[]{"up", "--path=./src/test/mybatisrepo"});
+
+        /*
+        //Also possible to use operations directly, though they are better suited for Java based migrations
+        new UpOperation().operate(
+
+                () -> DriverManager.getConnection(url, username, password),
+                new FileMigrationLoader(
+
+                        Util.file(new File("./src/test/mybatisrepo"), "./scripts"),
+                        "UTF-8",
+                        new Properties()
+                ), null, null
+        );
+        */
 
         final BaseCommand upCommand = new BaseCommand(options) {
 
