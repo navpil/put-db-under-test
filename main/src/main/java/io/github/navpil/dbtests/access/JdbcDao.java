@@ -1,5 +1,7 @@
 package io.github.navpil.dbtests.access;
 
+import io.github.navpil.dbtests.services.IJdbcDao;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcDao {
+public class JdbcDao implements IJdbcDao {
 
     private final String url;
     private final String username;
@@ -20,7 +22,8 @@ public class JdbcDao {
         this.password = password;
     }
 
-    public List<Car> getCars() throws SQLException {
+    @Override
+    public List<Car> list() throws SQLException {
         final ArrayList<Car> cars = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, brand, max_speed FROM car");
@@ -34,6 +37,19 @@ public class JdbcDao {
             }
         }
         return cars;
+    }
+
+    @Override
+    public void save(Car car) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO car(id, brand, max_speed) VALUES (?, ?, ?)");
+             ) {
+            preparedStatement.setString(1, car.getId());
+            preparedStatement.setString(2, car.getBrand());
+            preparedStatement.setInt(3, car.getMaxSpeed());
+            preparedStatement.execute();
+        }
+
     }
 
 }

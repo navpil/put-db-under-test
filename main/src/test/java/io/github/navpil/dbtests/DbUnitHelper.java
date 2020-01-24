@@ -26,6 +26,15 @@ public class DbUnitHelper {
         }
     }
 
+    public static void cleanupData(Connection connection) throws DatabaseUnitException, SQLException {
+        final IDatabaseConnection dbuConnection = getConnection(connection);
+        try {
+            DatabaseOperation.DELETE_ALL.execute(dbuConnection, dbuConnection.createDataSet());
+        } finally {
+            dbuConnection.close();
+        }
+    }
+
     private static IDatabaseConnection getConnection(Connection jdbcConnection) throws DatabaseUnitException {
         //need to specify schema, otherwise it will fail
         final DatabaseConnection connection = new DatabaseConnection(jdbcConnection, "dbo");

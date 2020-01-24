@@ -6,6 +6,15 @@ public class Car {
     private String brand;
     private int maxSpeed;
 
+    public Car() {
+    }
+
+    public Car(String id, String brand, int maxSpeed) {
+        this.id = id;
+        this.brand = brand;
+        this.maxSpeed = maxSpeed;
+    }
+
     public String getId() {
         return id;
     }

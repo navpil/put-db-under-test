@@ -22,7 +22,7 @@ public class TestDataAccess {
     @Test
     public void testUsingJdbc() throws SQLException {
         final JdbcDao dao = create(JdbcDao::new);
-        LOG.info(dao.getCars());
+        LOG.info(dao.list());
     }
 
     @Test
