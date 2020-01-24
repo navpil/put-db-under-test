@@ -1,36 +1,22 @@
-package io.github.navpil.dbtests;
+package io.github.navpil.dbtests.ddl;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import io.github.navpil.dbtests.Credentials;
 import org.apache.ibatis.migration.ConnectionProvider;
-import org.apache.ibatis.migration.DataSourceConnectionProvider;
-import org.apache.ibatis.migration.FileMigrationLoader;
-import org.apache.ibatis.migration.JdbcConnectionProvider;
 import org.apache.ibatis.migration.MigrationException;
 import org.apache.ibatis.migration.commands.BaseCommand;
 import org.apache.ibatis.migration.operations.UpOperation;
 import org.apache.ibatis.migration.options.OptionsParser;
 import org.apache.ibatis.migration.options.SelectedOptions;
-import org.apache.ibatis.migration.utils.Util;
 
-import java.io.File;
 import java.sql.DriverManager;
-import java.util.Properties;
+import java.sql.SQLException;
 
-public class MyBatisWrapper {
+public class MyBatisSetupSchema implements SetupSchema {
 
-
-    private final String url;
-    private final String username;
-    private final String password;
-
-    public MyBatisWrapper(String url, String username, String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
-    }
-
-    public void up() {
-        final SelectedOptions options = OptionsParser.parse(new String[]{"up", "--path=./src/test/mybatisrepo"});
+    @Override
+    public void ddl(Credentials credentials, String schemaLocation) throws SQLException {
+//        final SelectedOptions options = OptionsParser.parse(new String[]{"up", "--path=./src/test/mybatisrepo"});
+        final SelectedOptions options = OptionsParser.parse(new String[]{"up", "--path=" + schemaLocation});
 
         /*
         //Also possible to use operations directly, though they are better suited for Java based migrations
@@ -58,7 +44,7 @@ public class MyBatisWrapper {
             @Override
             protected ConnectionProvider getConnectionProvider() {
                 try {
-                    return () -> DriverManager.getConnection(url, username, password);
+                    return () -> DriverManager.getConnection(credentials.getUrl(), credentials.getUsername(), credentials.getPassword());
                 } catch (Exception var2) {
                     throw new MigrationException("Error creating ScriptRunner.  Cause: " + var2, var2);
                 }

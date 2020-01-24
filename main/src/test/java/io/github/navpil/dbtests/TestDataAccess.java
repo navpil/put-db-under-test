@@ -6,71 +6,64 @@ import io.github.navpil.dbtests.access.HibernateNativeDao;
 import io.github.navpil.dbtests.access.HibernateJpaDao;
 import io.github.navpil.dbtests.access.MyBatisDao;
 import io.github.navpil.dbtests.access.QueryDSLDao;
+import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.SQLException;
 
+@Ignore
 public class TestDataAccess {
+
+    private static final Logger LOG = Logger.getLogger(TestDataAccess.class);
+    
+    private SQLConfig config = SQLConfig.HSQLDB;
 
     @Test
     public void testUsingJdbc() throws SQLException {
-        final JdbcDao jdbcTemplateDao = new JdbcDao(
-                "jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;",
-                "",
-                ""
-        );
-        System.out.println(jdbcTemplateDao.getCars());
+        final JdbcDao dao = create(JdbcDao::new);
+        LOG.info(dao.getCars());
     }
 
     @Test
     public void testUsingJdbcTemplate() {
-        final JdbcTemplateDao jdbcTemplateDao = new JdbcTemplateDao(
-                "jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;",
-                "",
-                ""
-        );
-        System.out.println(jdbcTemplateDao.getCars());
+        final JdbcTemplateDao dao = create(JdbcTemplateDao::new);
+        LOG.info(dao.getCars());
     }
 
     @Test
     public void testUsingHibernate() {
-        final HibernateNativeDao hibernateBased = new HibernateNativeDao(
-                "jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;",
-                "",
-                ""
-        );
-        System.out.println(hibernateBased.getCars());
+        final HibernateNativeDao dao = create(HibernateNativeDao::new);
+        LOG.info(dao.getCars());
     }
 
     @Test
-    public void testUsingJpaNative() {
-        final HibernateJpaDao hibernateBased = new HibernateJpaDao(
-                "jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;",
-                "",
-                ""
-        );
-        System.out.println(hibernateBased.getNativeQueryCars());
-        System.out.println(hibernateBased.getJpqlCars());
-        System.out.println(hibernateBased.getCriteriaCars());
+    public void testUsingJpa() {
+        final HibernateJpaDao dao = create(HibernateJpaDao::new);
+        LOG.info(dao.getNativeQueryCars());
+        LOG.info(dao.getJpqlCars());
+        LOG.info(dao.getCriteriaCars());
     }
 
     @Test
     public void testUsingMyBatis() {
-        final MyBatisDao dao = new MyBatisDao(
-                "jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;",
-                "",
-                ""
-        );
-        System.out.println(dao.getCars());
+        final MyBatisDao dao = create(MyBatisDao::new);
+        LOG.info(dao.getCars());
     }
 
     @Test
     public void testUsingQueryDsl() {
-        final QueryDSLDao dao = new QueryDSLDao(
-                "jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;",
-                "",
-                ""
-        );
-        System.out.println(dao.getCars());
+        final QueryDSLDao dao = create(QueryDSLDao::new);
+        LOG.info(dao.getCars());
     }
+
+    public <Dao> Dao create(DaoConstructor<Dao> constructor) {
+        return constructor.create(config.getUrl("file:D:/temp/carrental"), config.username, config.password);
+    }
+
+    @FunctionalInterface
+    public interface DaoConstructor<Dao> {
+        Dao create(String url, String username, String password);
+    }
+
 }

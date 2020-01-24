@@ -92,8 +92,8 @@ public class ImportExportDataWithDbUnit {
         final ITable expectedCars = expectedDataSet.getTable("car");
         final ITable actualCars = fullDataSet.getTable("car");
 
-        ITable expectedTable = expectedCars; // declare the expected table
-        ITable actualTable = actualCars;  // declare the actual table
+        ITable expectedTable = expectedCars;
+        ITable actualTable = actualCars;
         ValueComparer defaultValueComparer = ValueComparers.isActualEqualToExpected;
         Map<String, ValueComparer> columnValueComparers =
                 new ColumnValueComparerMapBuilder()
@@ -103,7 +103,26 @@ public class ImportExportDataWithDbUnit {
         Assertion.assertWithValueComparer(expectedTable, actualTable, defaultValueComparer, columnValueComparers);
     }
 
-    private static IDatabaseConnection getConnection() throws SQLException, DatabaseUnitException {
+    private static IDatabaseConnection getConnection() throws DatabaseUnitException, SQLException {
+        if (SQLConfig.getDefault() == SQLConfig.HSQLDB) {
+            return getHsqlConnection();
+        } else {
+            return getSqlServerConnection();
+        }
+    }
+
+    private static IDatabaseConnection getHsqlConnection() throws SQLException, DatabaseUnitException {
+        final SQLConfig c = SQLConfig.HSQLDB;
+        Connection jdbcConnection = DriverManager.getConnection(
+                c.getUrl("file:D:/temp/carrental"), c.username, c.password);
+        //need to specify schema, otherwise it will fail
+        final DatabaseConnection connection = new DatabaseConnection(jdbcConnection, "public");
+        connection.getConfig().setProperty(DatabaseConfig.FEATURE_ALLOW_EMPTY_FIELDS , "true");
+
+        return connection;
+    }
+
+    private static IDatabaseConnection getSqlServerConnection() throws SQLException, DatabaseUnitException {
         Connection jdbcConnection = DriverManager.getConnection(
                 "jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;", "", "");
         //need to specify schema, otherwise it will fail

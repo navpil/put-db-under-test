@@ -23,8 +23,8 @@ public class JdbcDao {
     public List<Car> getCars() throws SQLException {
         final ArrayList<Car> cars = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, brand, max_speed FROM car")) {
-            final ResultSet resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, brand, max_speed FROM car");
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 final Car car = new Car();
                 car.setId(resultSet.getString("id"));

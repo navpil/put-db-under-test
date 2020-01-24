@@ -1,6 +1,8 @@
 package io.github.navpil.dbtests;
 
+import io.github.navpil.dbtests.ddl.MyBatisSetupSchema;
 import org.dbunit.DatabaseUnitException;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testcontainers.containers.MSSQLServerContainer;
@@ -12,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Ignore
 public class SqlServerDbTest {
 
     @Rule
@@ -36,7 +39,7 @@ public class SqlServerDbTest {
         System.out.println("All went fine");
 
         //DDL
-        new MyBatisWrapper(url+ ";databaseName=carrental", username, password).up();
+        new MyBatisSetupSchema().ddl(new Credentials(url+ ";databaseName=carrental", username, password), "./src/test/mybatisrepo");
 
         connection = DriverManager.getConnection(url + ";databaseName=carrental", username, password);
 

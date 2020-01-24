@@ -32,6 +32,10 @@ Use one of the migration tools defined below.
 
 By far the best tool for the job is [DbUnit](http://dbunit.sourceforge.net/)
 
+The non-obvious method of deleting all data from Database is:
+
+    DatabaseOperation.DELETE_ALL.execute(conn, conn.createDataSet());
+
 Data can be populated by using of the tools for accessing the DB, described below.
 
 ### Query the data
