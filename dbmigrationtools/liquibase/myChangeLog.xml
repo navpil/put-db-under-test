@@ -5,5 +5,20 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
+  <!-- can include directories -->
   <includeAll path="sql"/>
+  <!-- can include changesets directly -->
+  <changeSet author="navpil" id="create a house">
+    <createTable tableName="house">
+      <column name="id" type="uniqueidentifier">
+        <constraints primaryKey="true" primaryKeyName="PK__houses2__3213E83F3E59A5B6"/>
+      </column>
+      <column name="name" type="varchar(256)"/>
+      <column name="year_built" type="int"/>
+    </createTable>
+  </changeSet>
+  <!-- can include sql changesets and xml changelogs -->
+  <include file="other_migrations/create_garages.sql"/>
+  <include file="other_migrations/create_wheels.xml"/>
+
 </databaseChangeLog>

@@ -10,6 +10,8 @@ public class SqlServerRecreate implements RecreateDB {
     public void recreateDb(Connection c, String dbName) throws SQLException {
         try (Statement s = c.createStatement()) {
             s.executeUpdate("DROP DATABASE " + dbName);
+        } catch (SQLException ignore) {
+            //Could not drop - this is not a problem yet
         }
         try (Statement s = c.createStatement()) {
             s.executeUpdate("CREATE DATABASE " + dbName);

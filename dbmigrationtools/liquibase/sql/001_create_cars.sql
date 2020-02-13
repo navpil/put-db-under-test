@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset author:jimmy
+--changeset navpil:create_car_table (note the underscore)
 create table car (
   id uniqueidentifier primary key,
   brand varchar(256),

@@ -13,14 +13,6 @@
     <artifactId>main</artifactId>
 
 
-    <properties>
-        <spring.framework>5.2.1.RELEASE</spring.framework>
-        <!--        <spring.version>4.3.0.RELEASE</spring.version>-->
-        <!--        <spring.data.jpa.version>1.7.1.RELEASE</spring.data.jpa.version>-->
-        <hibernate.version>5.3.3.Final</hibernate.version>
-        <querydsl.version>4.2.1</querydsl.version>
-    </properties>
-
     <build>
         <plugins>
             <!-- Plugin creates Q... classes from JPA entities for QueryDSL -->

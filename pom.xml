@@ -11,10 +11,19 @@
     <modules>
         <module>main</module>
         <module>flywayjavamigrations</module>
+        <module>dbunit</module>
+        <module>hibernatemigrations</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spring.framework>5.2.1.RELEASE</spring.framework>
+        <!--        <spring.version>4.3.0.RELEASE</spring.version>-->
+        <!--        <spring.data.jpa.version>1.7.1.RELEASE</spring.data.jpa.version>-->
+        <hibernate.version>5.3.3.Final</hibernate.version>
+        <querydsl.version>4.2.1</querydsl.version>
+
     </properties>
 
     <build>

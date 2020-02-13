@@ -13,7 +13,8 @@ All the 4 parts can be used independently and combined in whatever manner.
 
 Can be done in various ways, for example:
 
-1. Manually create DB with a predefined name which is then used by tests
+1. Manually create DB with a predefined name which is then used by tests.
+Don't forget to clean it before running tests (dropping tables is a good idea)
 2. Create DB with a JDBC query before running tests, for example:
 
         DriverManager.getConnection("jdbc:sqlserver://localhost;", "username", "password")
@@ -22,6 +23,9 @@ Can be done in various ways, for example:
 
 3. Use [Testcontainers](https://www.testcontainers.org/), requires [Docker](https://www.docker.com/)
 4. Use in-memory Database, but be aware that if it's a different engine, DB test results may be irrelevant.
+5. Backup from some source.
+This will contain schema and data, so use it only when you really need it to be this way.
+For example for performance tests.
 
 ### DDL the DB
 
@@ -84,22 +88,34 @@ Not too lightweight - 22 Megs.
 Is a pretty large tool. 
 It allows (among other things): 
 
+ - Database comparison (`diff`) - tool for checking differences in DB schemas
+ - Generate changeset to recreate given DB (`generateChangeLog`)
+ - Generate changeset out of database differences (`diffChangeLog`)
+ - Generate database documentation (`dbDoc`)
  - Revert
- - Database comparison, 
- - Xml migrations, which are transformed to SQL queries, 
- - SQL migrations
+ - Xml migrations, which are transformed to SQL queries 
+ - SQL migrations (specially formatted for Liquibase, I do not recommend using plain SQL)
  
 Has clear programming interface.
  
 Has enterprise version with some advanced features (XML based Stored procedures) and support.
 
+It's easy to put liquibase in a strange state when there is no discipline in dev team.
+For example changing the order of changesets in a changelog has no effect on validating.
+Or accidentally changing the name:id tag in a changeset does not result in an error.  
+
+Plain SQL migrations are supported, but then rollback will not work for them (and for all previous changesets as well).
+After such migrations was applied it is quite difficult to make rollbacks to work again.
+
 ### Built-in Hibernate migrations
 
-    hibernate.hbm2ddl.auto=create-drop
+    hibernate.hbm2ddl.auto=update (validate | update | create | create-drop )
     
 Not really a safe option, but can be used for testing.
 
 However if production uses other DDL scripts, database for testing might not be the same as production.
+
+Moreover as described in `hibernatemigrations` this does not always work for production. 
 
 ### Other options
 
