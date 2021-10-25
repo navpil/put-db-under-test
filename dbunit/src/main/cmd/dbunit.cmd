@@ -1,2 +1,3 @@
 set COMMAND=%1
-java -cp "dependency/*;dbunithelper.jar" io.github.navpil.dbtests.dbunit.CmdRunner %COMMAND% jdbc:sqlserver://localhost;databaseName=carrental;integratedSecurity=true;
+java -cp "dependency/*;dbunithelper.jar" io.github.navpil.dbtests.dbunit.CmdRunner dbunit.properties %COMMAND% data
+java -cp "dependency/*;dbunithelper.jar" io.github.navpil.dbtests.dbunit.CmdRunner dbunit.properties %COMMAND% dbo

@@ -38,7 +38,7 @@ public class SqlServerDbHelper implements AutoCloseable {
     private IDatabaseConnection connection;
 
     public SqlServerDbHelper(Connection connection, String schema) throws DatabaseUnitException {
-        this.connection = qgetDbUnitConnection(connection, schema);
+        this.connection = getDbUnitConnection(connection, schema);
     }
 
     /**
@@ -48,7 +48,7 @@ public class SqlServerDbHelper implements AutoCloseable {
      * @param jdbcConnection
      * @param schema
      */
-    private static IDatabaseConnection qgetDbUnitConnection(Connection jdbcConnection, String schema) throws DatabaseUnitException {
+    private static IDatabaseConnection getDbUnitConnection(Connection jdbcConnection, String schema) throws DatabaseUnitException {
         //need to specify schema, otherwise it will fail
         IDatabaseConnection connection = new DatabaseConnection(jdbcConnection, schema);
         //need to specify escape pattern, otherwise it will fail

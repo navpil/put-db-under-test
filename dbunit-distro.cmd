@@ -1,3 +1,4 @@
+rmdir /s /q dbunit\target\dist
 mkdir dbunit\target\dist || goto :ErrorHandling
 mkdir dbunit\target\dist\dependency || goto :ErrorHandling
 xcopy dbunit\src\main\cmd dbunit\target\dist  || goto :ErrorHandling
