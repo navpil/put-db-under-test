@@ -58,7 +58,7 @@ public class TestDataAccess {
     }
 
     public <Dao> Dao create(DaoConstructor<Dao> constructor) {
-        return constructor.create(config.getUrl("file:D:/temp/carrental"), config.username, config.password);
+        return constructor.create(config.getUrl("file:" + System.getProperty("user.home") + "/temp/carrental"), config.username, config.password);
     }
 
     @FunctionalInterface

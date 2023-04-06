@@ -114,7 +114,7 @@ public class ImportExportDataWithDbUnit {
     private static IDatabaseConnection getHsqlConnection() throws SQLException, DatabaseUnitException {
         final SQLConfig c = SQLConfig.HSQLDB;
         Connection jdbcConnection = DriverManager.getConnection(
-                c.getUrl("file:D:/temp/carrental"), c.username, c.password);
+                c.getUrl("file:" + System.getProperty("user.home") + "/temp/carrental"), c.username, c.password);
         //need to specify schema, otherwise it will fail
         final DatabaseConnection connection = new DatabaseConnection(jdbcConnection, "public");
         connection.getConfig().setProperty(DatabaseConfig.FEATURE_ALLOW_EMPTY_FIELDS , "true");

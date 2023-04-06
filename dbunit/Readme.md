@@ -2,7 +2,7 @@
 
     > mvn clean package
     > dbunit-distro.cmd
-    > cd dbunit\target\dist
+    > cd target\dist
 
 Adjust `dbunit.properties` and if necessary `dbunit.cmd`
 

@@ -57,7 +57,7 @@ public class PrepareDatabaseTest {
     @Test
     public void prepareHsqldbWithJdbcAndLiquibase() throws SQLException {
         final SQLConfig hsqldb = SQLConfig.HSQLDB;
-        final Credentials credentials = new Credentials(hsqldb.getUrl("file:D:/temp/carrental"), hsqldb.username, hsqldb.password);
+        final Credentials credentials = new Credentials(hsqldb.getUrl("file:" + System.getProperty("user.home") + "/temp/carrental"), hsqldb.username, hsqldb.password);
 
         //Step 1: Create DB
         //Database is created automatically, but we need to reset it with HSQL
