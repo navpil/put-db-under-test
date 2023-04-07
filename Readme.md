@@ -68,6 +68,8 @@ Has clear programming interface.
 
 Has Enterprise version which supports old databases and more features (for instance `undo`)
 
+    FlywaySetupSchema
+
 ### Mybatis Migrations
 
 Very lightweight. 
@@ -80,6 +82,8 @@ But programmatic interaction is still possible.
 Is absolutely free, no enterprise version.
 
 Supports both .sql migrations and .java migrations, but they can't be used together out of the box.
+
+    MyBatisSetupSchema
 
 ### Liquibase
 
@@ -106,6 +110,8 @@ Or accidentally changing the name:id tag in a changeset does not result in an er
 
 Plain SQL migrations are supported, but then rollback will not work for them (and for all previous changesets as well).
 After such migrations was applied it is quite difficult to make rollbacks to work again.
+
+    LiquibaseSetupSchema
 
 ### Built-in Hibernate migrations
 
@@ -216,3 +222,28 @@ Provides basic CRUD queries out of the box and creates queries based on interfac
 
 I could not find a simple setup of SpringData outside the spring context, so no examples available.
 Therefore I'm not sure it is really good for testing.
+
+## Test classes description
+
+`services/CarServiceTest` shows why it's dangerous to rely on database mocking.
+Test passes on mocks, but fails on a real DB.
+
+`DataAccessTest` shows various ways of accessing data (step 4).
+
+`ImportExportDataWithDbUnitTest` shows examples of how to use DBUnit to work with data.
+
+`PrepareDatabaseTest` shows various ways how to prepare database for testing,
+meaning it will show first 2 steps - DB creation and DDL.
+
+`SqlServerDbTest` shows the usage of test containers (requires Docker)
+
+## Other modules description
+
+`dbmigrationtools` shows examples how to use various db migration tools from command line.
+You might need to change the `setenv.cmd` to point to correct paths or to rewrite it for *nix system.
+
+`dbunit` creates a DBUnit helper - a cmd utility to backup and restore DB data using DBUnit.
+
+`flywayjavamigrations` shows and describes in a separate `Readme.md` how to make Java migrations in flyway.
+
+`hibernatemigrations` shows problems which may occur when using the `auto-ddl` feature in Hibernate.

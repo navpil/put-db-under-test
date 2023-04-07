@@ -13,9 +13,9 @@ import org.junit.Test;
 import java.sql.SQLException;
 
 @Ignore
-public class TestDataAccess {
+public class DataAccessTest {
 
-    private static final Logger LOG = Logger.getLogger(TestDataAccess.class);
+    private static final Logger LOG = Logger.getLogger(DataAccessTest.class);
     
     private SQLConfig config = SQLConfig.HSQLDB;
 

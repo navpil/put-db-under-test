@@ -18,7 +18,7 @@ public class GenerateDataWithUnorderedWheels {
 
         new SqlServerRecreate().recreateDb(
                 new Credentials(
-                        "jdbc:sqlserver://localhost;;integratedSecurity=true;",
+                        "jdbc:sqlserver://localhost;integratedSecurity=true;",
                         "",
                         ""
                 ),
