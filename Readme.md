@@ -136,6 +136,8 @@ Some non-java tools worth mentioning:
  - [Active record](https://guides.rubyonrails.org/v5.2/active_record_migrations.html)
  - [Django migrations](https://docs.djangoproject.com/en/2.2/topics/migrations/)
 
+One can also use custom SQL scripts, though it's not advisable.
+
 ## Access DB
 
 Nice link about technologies mentioned below:
@@ -216,6 +218,12 @@ Similar to Criteria API but its interface is more fluent.
 Builds `QCarEntity` using maven tasks.
 Can build them from `JPA`, `JDO` or `SQL` by connecting to the Database.
 
+### jOOQ
+
+Similar to QueryDSL, but generates classes from database (not from JPA entities as for QueryDSL).
+
+    JooqDao
+
 ### SpringData
 
 Provides basic CRUD queries out of the box and creates queries based on interface method names.
@@ -247,3 +255,25 @@ You might need to change the `setenv.cmd` to point to correct paths or to rewrit
 `flywayjavamigrations` shows and describes in a separate `Readme.md` how to make Java migrations in flyway.
 
 `hibernatemigrations` shows problems which may occur when using the `auto-ddl` feature in Hibernate.
+
+## Other notes
+
+### Reasoning
+
+Why did I write it in the first place?
+First two results from google on "selenium db testing" gave this:
+
+ - https://www.browserstack.com/guide/database-testing-using-selenium
+ - https://www.guru99.com/database-testing-using-selenium-step-by-step-guide.html
+
+### NoSQL
+
+Test some older format data.
+
+## Mistakes
+
+ - Not testing DB
+ - Not using same engine for test and prod
+ - No data preparation
+
+https://dzone.com/articles/basic-mistakes-database
